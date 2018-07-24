@@ -20,19 +20,7 @@ rule_files:
 # Here it's Prometheus itself.
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-  - job_name: 'prometheus'
-
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
-
-    static_configs:
-      - targets: ['localhost:9090']
-
-  - job_name: 'internal-nodes'
-    static_configs:
-      - targets: ['rpi:9100', 'QuasExort93.Dlink:9100', 'tux-sudo.com']
-
-  - job_name: 'grafana-hosted'
-    scheme: https 
-    static_configs:
-      - targets: ['tuxsudo.grafana.net']
+  - job_name: 'consul-services'
+    consul_sd_configs:
+    - server: 'localhost:8500'
+      tag: "scrape"
